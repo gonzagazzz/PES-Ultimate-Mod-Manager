@@ -1,0 +1,68 @@
+﻿<Window x:Class="PUMM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PUMM"
+        xmlns:view="clr-namespace:PUMM.View"
+        xmlns:viewModel="clr-namespace:PUMM.ViewModel"
+        mc:Ignorable="d"
+        Title="MainWindow" MinWidth="800" MinHeight="600" Width="800" Height="600" WindowStartupLocation="CenterScreen">
+
+    
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+            <view:Home/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:LibraryViewModel}">
+            <view:Library/>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*" MaxWidth="280"/>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+            <StackPanel.Background>
+                <ImageBrush ImageSource="pack://application:,,,/PUMM;component/Resources/menu_background.png" Stretch="UniformToFill"/>
+            </StackPanel.Background>
+            <Image Source="pack://application:,,,/PUMM;component/Resources/menu_header.png" VerticalAlignment="Top" Margin="16" RenderOptions.BitmapScalingMode="Fant"/>
+            <Button Name="tabHome" Command="{Binding NavCommand}" CommandParameter="home" Click="TabHome_Click" Style="{StaticResource EnabledTab}" Cursor="Hand" Margin="16, 0, 16, 0">
+                <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/home_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Home</Label>
+                </DockPanel>
+            </Button>
+            <Button Name="tabLibrary" Command="{Binding NavCommand}" CommandParameter="library" Click="TabLibrary_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
+                <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/library_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Library</Label>
+                </DockPanel>
+            </Button>
+        </StackPanel>
+
+        <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row="1">
+            <ContentControl Content = "{Binding CurrentViewModel}" />
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Background="White" MaxHeight="88">
+            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
+                <Label HorizontalAlignment="Right">Real Madrid Full Mods 2019</Label>
+                <Label HorizontalAlignment="Right">8 CPKs</Label>
+
+            </StackPanel>
+            <Image Stretch="Fill" Width="88" Height="88" Source="pack://application:,,,/PUMM;component/Resources/menu_background.png"/>
+            
+        </StackPanel>
+    </Grid>
+</Window>
