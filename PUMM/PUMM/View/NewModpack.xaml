@@ -2,7 +2,8 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:PUMM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -19,23 +20,12 @@
 
         <TextBlock FontWeight="SemiBold" FontSize="18" Margin="32 24 0 0" Foreground="#404040" Grid.Column="0" Grid.Row="0">New Modpack</TextBlock>
         <Image Source="pack://application:,,,/PUMM;component/Resources/add_icon.png" RenderOptions.BitmapScalingMode="Fant" Grid.Column="0" Grid.Row="1"></Image>
-        <!-- Watermark only disappears when clicked on the margin
-        <Grid Grid.Column="0" Grid.Row="2">
-            <TextBox Style="{StaticResource DisabledInput}" VerticalAlignment="Center" HorizontalAlignment="Left" x:Name="nameInput" FontSize="16" Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Grid}}}" Background="PaleVioletRed"/>
-            <TextBlock Text="Name" VerticalAlignment="Center" Margin="32 0 0 0" Foreground="DarkGray" FontSize="16">
-                <TextBlock.Style>
-                    <Style TargetType="{x:Type TextBlock}">
-                        <Setter Property="Visibility" Value="Collapsed"/>
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Text, ElementName=nameInput}" Value="">
-                                <Setter Property="Visibility" Value="Visible"/>
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </TextBlock.Style>
-            </TextBlock>
-        </Grid>
-        -->
+        <xctk:WatermarkTextBox FontSize="14" Foreground="#404040" Style="{StaticResource DisabledInput}" Grid.Column="0" Grid.Row="2" KeepWatermarkOnGotFocus="True">
+            <xctk:WatermarkTextBox.Watermark>
+                <TextBlock Text="Name" />
+            </xctk:WatermarkTextBox.Watermark>
+        </xctk:WatermarkTextBox>
         <Button Style="{StaticResource Flat}" Grid.Column="0" Grid.Row="3">Add Modpack</Button>
+        
     </Grid>
 </UserControl>
