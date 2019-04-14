@@ -9,7 +9,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#EDF1F2">
-        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0" Margin="0 14 0 0">
             <ItemsControl x:Name="lstModpacks" ItemsSource="{Binding Modpacks}" root:SizeObserver.Observe="True" root:SizeObserver.ObservedWidth="{Binding PanelWidth, Mode=OneWayToSource}">
                 
                 <i:Interaction.Triggers>
@@ -23,7 +30,7 @@
                 
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Margin="7"/>
+                        <WrapPanel Margin="7 0 7 0"/>
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 
@@ -49,7 +56,7 @@
                             <Button Command="{Binding ElementName=lstModpacks, Path=DataContext.Print}" Style="{StaticResource Flat}" Cursor="Hand" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3">Set as Active</Button>
                         </Grid>
                         -->
-                        <Grid Width="{Binding ElementName=lstModpacks, Path=DataContext.ItemWidth}" Height="180" Margin="7">
+                        <Grid Width="{Binding ElementName=lstModpacks, Path=DataContext.ItemWidth}" Height="180" Margin="7 0 7 14">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
@@ -59,7 +66,7 @@
                             </Grid.RowDefinitions>
 
                             <Grid.Background>
-                                <ImageBrush ImageSource="pack://application:,,,/PUMM;component/Resources/menu_background.png" Stretch="UniformToFill"/>
+                                <ImageBrush ImageSource="{Binding thumbnail}" Stretch="UniformToFill"/>
                             </Grid.Background>
                             <Grid Grid.Row="1" Background="White">
                                 <Grid.ColumnDefinitions>

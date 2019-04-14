@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:PUMM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
+        
         <Style TargetType="{x:Type Button}" x:Key="DisabledTab">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -22,6 +23,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style TargetType="{x:Type Button}" x:Key="EnabledTab">
             <Setter Property="Background" Value="#008FD8"/>
             <Setter Property="Foreground" Value="White"/>
@@ -40,6 +42,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style TargetType="{x:Type Button}" x:Key="Flat">
             <Setter Property="Background" Value="#008FD8"/>
             <Setter Property="Foreground" Value="White"/>
@@ -58,15 +61,13 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+        
         <Style TargetType="{x:Type TextBox}" x:Key="DisabledInput">
+            <Setter Property="Padding" Value="32 0 0 0"></Setter>
             <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Foreground" Value="Black"/>
             <Setter Property="BorderThickness" Value="0"></Setter>
-            <Style.Triggers>
-                <Trigger Property="IsEnabled" Value="False">
-                    <Setter Property="Background" Value="OrangeRed"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
+
     </Application.Resources>
 </Application>

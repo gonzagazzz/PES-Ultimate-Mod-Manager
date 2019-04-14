@@ -1,19 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using PUMM.Model;
 
 namespace PUMM.ViewModel
 {
     class LibraryViewModel : BindableBase
     {
-        public LibraryViewModel()
+        DbProvider db;
+
+        public LibraryViewModel(DbProvider db)
         {
+            this.db = db;
+
             LoadModpacks();
+
             Print = new MyICommand<string>(PrintForDebug);
             UpdateItems = new MyICommand<string>(PanelLoaded);
         }
@@ -26,8 +34,8 @@ namespace PUMM.ViewModel
             get { return _ItemWidth; }
             set { SetProperty<double>(ref _ItemWidth, value); }
         }
-        public double PanelWidth { get; set; }
 
+        public double PanelWidth { get; set; }
 
         public ObservableCollection<Modpack> Modpacks
         {
@@ -41,31 +49,35 @@ namespace PUMM.ViewModel
             
             modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" }); modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
+            modpacks.Add(new Modpack { Name = "SLB Loladas" });
+            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
             modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
             modpacks.Add(new Modpack { Name = "SLB Loladas" });
 
             Modpacks = modpacks;
-            
         }
 
         private void PrintForDebug(string s)
         {
             MessageBox.Show(System.AppDomain.CurrentDomain.BaseDirectory);
-            //MessageBox.Show("[Debug] Panel Width: " + PanelWidth);
-            //MessageBox.Show("[Debug] Item Width: " + ItemWidth);
         }
 
         private void PanelLoaded(string s)

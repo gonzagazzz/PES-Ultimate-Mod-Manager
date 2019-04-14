@@ -9,18 +9,18 @@ namespace PUMM.ViewModel
 {
     class MainWindowViewModel : BindableBase
     {
-
         private HomeViewModel home;
         private LibraryViewModel library;
+        private NewModpackViewModel new_modpack;
+        private DbProvider db;
 
         public MainWindowViewModel()
         {
-            if(!File.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "registry.sqlite"))
-            {
-                
-            }
+            db = new DbProvider();
+            /* Initializes needed ViewModels */
             home = new HomeViewModel();
-            library = new LibraryViewModel();
+            library = new LibraryViewModel(db);
+            new_modpack = new NewModpackViewModel();
 
             CurrentViewModel = home;
             NavCommand = new MyICommand<string>(OnNav);
@@ -45,6 +45,9 @@ namespace PUMM.ViewModel
                     break;
                 case "library":
                     CurrentViewModel = library;
+                    break;
+                case "new_modpack":
+                    CurrentViewModel = new_modpack;
                     break;
                 default:
                     break;

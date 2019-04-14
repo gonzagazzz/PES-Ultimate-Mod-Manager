@@ -38,12 +38,21 @@ namespace PUMM
         {
             tabHome.Style = (Style)Application.Current.Resources["EnabledTab"];
             tabLibrary.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabNewModpack.Style = (Style)Application.Current.Resources["DisabledTab"];
         }
 
         private void TabLibrary_Click(object sender, RoutedEventArgs e)
         {
             tabHome.Style = (Style)Application.Current.Resources["DisabledTab"];
             tabLibrary.Style = (Style)Application.Current.Resources["EnabledTab"];
+            tabNewModpack.Style = (Style)Application.Current.Resources["DisabledTab"];
+        }
+
+        private void TabNewModpack_Click(object sender, RoutedEventArgs e)
+        {
+            tabHome.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabLibrary.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabNewModpack.Style = (Style)Application.Current.Resources["EnabledTab"];
         }
     }
 }
