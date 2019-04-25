@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using PUMM.Model;
 
 namespace PUMM
 {
@@ -40,6 +43,7 @@ namespace PUMM
                 ")";
             SQLiteCommand command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
+
             query = "CREATE TABLE mod (" +
                 "'id' INTEGER NOT NULL," +
                 "'filepath' TEXT NOT NULL," +
@@ -47,6 +51,7 @@ namespace PUMM
                 ")";
             command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
+
             query = "CREATE TABLE mod_modpack (" +
                 "'id_mod' INTEGER NOT NULL," +
                 "'id_modpack' INTEGER NOT NULL" +
@@ -54,6 +59,30 @@ namespace PUMM
             command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
             db.Close();
+        }
+
+        public void addModpack(string name, string thumbnail)
+        {
+            db.Open();
+            string query = "INSERT INTO modpack (name, thumbnail, is_active) VALUES ('" + name + "', '" + thumbnail + "', 0)";
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            command.ExecuteNonQuery();
+            db.Close();
+        }
+
+        public ObservableCollection<Modpack> retrieveModpacks()
+        {
+            ObservableCollection<Modpack> modpacks = new ObservableCollection<Modpack>();
+
+            db.Open();
+            string query = "SELECT * FROM modpack";
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+                modpacks.Add(new Modpack { Name = reader.GetString(1), ImagePath = reader.GetString(2), IsActive = reader.GetBoolean(3) });
+            db.Close();
+
+            return modpacks;
         }
     }
 }

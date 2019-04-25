@@ -24,15 +24,5 @@ namespace PUMM.View
         {
             InitializeComponent();
         }
-
-        private void NameInput_GotFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void NameInput_LostFocus(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }

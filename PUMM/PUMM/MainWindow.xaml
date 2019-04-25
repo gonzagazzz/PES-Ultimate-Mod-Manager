@@ -47,7 +47,7 @@
             </Button>
             <Button Name="tabNewModpack" Command="{Binding NavCommand}" CommandParameter="new_modpack" Click="TabNewModpack_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
                 <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/add_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/add_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">New Modpack</Label>
                 </DockPanel>
             </Button>

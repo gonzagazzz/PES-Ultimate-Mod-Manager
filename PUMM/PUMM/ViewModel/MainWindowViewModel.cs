@@ -10,7 +10,6 @@ namespace PUMM.ViewModel
     class MainWindowViewModel : BindableBase
     {
         private HomeViewModel home;
-        private LibraryViewModel library;
         private NewModpackViewModel new_modpack;
         private DbProvider db;
 
@@ -19,8 +18,7 @@ namespace PUMM.ViewModel
             db = new DbProvider();
             /* Initializes needed ViewModels */
             home = new HomeViewModel();
-            library = new LibraryViewModel(db);
-            new_modpack = new NewModpackViewModel();
+            new_modpack = new NewModpackViewModel(db);
 
             CurrentViewModel = home;
             NavCommand = new MyICommand<string>(OnNav);
@@ -44,7 +42,7 @@ namespace PUMM.ViewModel
                     CurrentViewModel = home;
                     break;
                 case "library":
-                    CurrentViewModel = library;
+                    CurrentViewModel = new LibraryViewModel(db);
                     break;
                 case "new_modpack":
                     CurrentViewModel = new_modpack;

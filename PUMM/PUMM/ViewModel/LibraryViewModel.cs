@@ -20,7 +20,7 @@ namespace PUMM.ViewModel
         {
             this.db = db;
 
-            LoadModpacks();
+            Modpacks = db.retrieveModpacks();
 
             Print = new MyICommand<string>(PrintForDebug);
             UpdateItems = new MyICommand<string>(PanelLoaded);
@@ -41,38 +41,6 @@ namespace PUMM.ViewModel
         {
             get;
             set;
-        }
-
-        public void LoadModpacks()
-        {
-            ObservableCollection<Modpack> modpacks = new ObservableCollection<Modpack>();
-            
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-            modpacks.Add(new Modpack { Name = "Real Madrid Full Mods 2019" });
-            modpacks.Add(new Modpack { Name = "Super Dragões Pack" });
-            modpacks.Add(new Modpack { Name = "SLB Loladas" });
-
-            Modpacks = modpacks;
         }
 
         private void PrintForDebug(string s)

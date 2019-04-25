@@ -8,7 +8,8 @@ namespace PUMM.Model
     public class Modpack : INotifyPropertyChanged
     {
         private string name;
-        private string filepath = @"C:\Users\GonzagaZZZ\Desktop\199376822.jpeg";
+        private string filepath;
+        private bool isActive;
 
         public string Name
         {
@@ -23,9 +24,35 @@ namespace PUMM.Model
             }
         }
 
-        public ImageSource thumbnail
+        public string ImagePath
         {
-            get { return LoadThumbnail(filepath); }
+            get { return filepath; }
+            set
+            {
+                if (filepath != value)
+                {
+                    filepath = value;
+                    RaisePropertyChanged("filepath");
+                }
+            }
+        }
+
+        public bool IsActive
+        {
+            get { return isActive; }
+            set
+            {
+                if (isActive != value)
+                {
+                    isActive = value;
+                    RaisePropertyChanged("isActive");
+                }
+            }
+        }
+
+        public ImageSource Thumbnail
+        {
+            get { return Util.LoadThumbnail(filepath); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,19 +63,6 @@ namespace PUMM.Model
             {
                 PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
-        }
-
-        public static ImageSource LoadThumbnail(string filepath)
-        {
-            var image = new BitmapImage();
-            using (var stream = new FileStream(filepath, FileMode.Open))
-            {
-                image.BeginInit();
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.StreamSource = stream;
-                image.EndInit();
-            }
-            return image;
         }
     }
 }

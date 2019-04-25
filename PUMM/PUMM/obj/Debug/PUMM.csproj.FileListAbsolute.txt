@@ -47,16 +47,5 @@ D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\System.Data.SQLite.d
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\System.Data.SQLite.xml
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\View\NewModpack.g.cs
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\View\NewModpack.baml
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\PUMM.csprojAssemblyReference.cache
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\Xceed.Wpf.AvalonDock.dll
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\Xceed.Wpf.Toolkit.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\de\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\es\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\fr\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\hu\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\it\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\pt-BR\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\ro\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\ru\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\sv\Xceed.Wpf.AvalonDock.resources.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\zh-Hans\Xceed.Wpf.AvalonDock.resources.dll
+D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\PUMM.csprojAssemblyReference.cache

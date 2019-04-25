@@ -63,9 +63,9 @@ namespace PUMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap add_icon {
+        public static System.Drawing.Bitmap add_ico {
             get {
-                object obj = ResourceManager.GetObject("add_icon", resourceCulture);
+                object obj = ResourceManager.GetObject("add_ico", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -66,7 +66,7 @@
                             </Grid.RowDefinitions>
 
                             <Grid.Background>
-                                <ImageBrush ImageSource="{Binding thumbnail}" Stretch="UniformToFill"/>
+                                <ImageBrush ImageSource="{Binding Thumbnail}" Stretch="UniformToFill"/>
                             </Grid.Background>
                             <Grid Grid.Row="1" Background="White">
                                 <Grid.ColumnDefinitions>

@@ -56,9 +56,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xceed.Wpf.AvalonDock">
-      <HintPath>..\..\..\..\..\MES Modder\Tools\Extended WPF Toolkit\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
     <Reference Include="Xceed.Wpf.Toolkit">
       <HintPath>..\..\..\..\..\MES Modder\Tools\Extended WPF Toolkit\Xceed.Wpf.Toolkit.dll</HintPath>
     </Reference>
@@ -73,6 +70,7 @@
     <Compile Include="Model\Modpack.cs" />
     <Compile Include="MyICommand.cs" />
     <Compile Include="SizeObserver.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LibraryViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
@@ -160,8 +158,7 @@
     <Resource Include="Resources\thumbnail_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\add_icon.png" />
+    <Resource Include="Resources\add_ico.png" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
