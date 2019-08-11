@@ -7,9 +7,22 @@ namespace PUMM.Model
 {
     public class Modpack : INotifyPropertyChanged
     {
+        private int id;
         private string name;
         private string filepath;
-        private bool isActive;
+
+        public int Id
+        {
+            get { return id; }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged("name");
+                }
+            }
+        }
 
         public string Name
         {
@@ -33,19 +46,7 @@ namespace PUMM.Model
                 {
                     filepath = value;
                     RaisePropertyChanged("filepath");
-                }
-            }
-        }
-
-        public bool IsActive
-        {
-            get { return isActive; }
-            set
-            {
-                if (isActive != value)
-                {
-                    isActive = value;
-                    RaisePropertyChanged("isActive");
+                    RaisePropertyChanged("Thumbnail");
                 }
             }
         }

@@ -39,6 +39,7 @@ namespace PUMM
             tabHome.Style = (Style)Application.Current.Resources["EnabledTab"];
             tabLibrary.Style = (Style)Application.Current.Resources["DisabledTab"];
             tabNewModpack.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabMods.Style = (Style)Application.Current.Resources["DisabledTab"];
         }
 
         private void TabLibrary_Click(object sender, RoutedEventArgs e)
@@ -46,6 +47,7 @@ namespace PUMM
             tabHome.Style = (Style)Application.Current.Resources["DisabledTab"];
             tabLibrary.Style = (Style)Application.Current.Resources["EnabledTab"];
             tabNewModpack.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabMods.Style = (Style)Application.Current.Resources["DisabledTab"];
         }
 
         private void TabNewModpack_Click(object sender, RoutedEventArgs e)
@@ -53,6 +55,27 @@ namespace PUMM
             tabHome.Style = (Style)Application.Current.Resources["DisabledTab"];
             tabLibrary.Style = (Style)Application.Current.Resources["DisabledTab"];
             tabNewModpack.Style = (Style)Application.Current.Resources["EnabledTab"];
+            tabMods.Style = (Style)Application.Current.Resources["DisabledTab"];
+        }
+
+        private void TabMods_Click(object sender, RoutedEventArgs e)
+        {
+            tabHome.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabLibrary.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabNewModpack.Style = (Style)Application.Current.Resources["DisabledTab"];
+            tabMods.Style = (Style)Application.Current.Resources["EnabledTab"];
+        }
+
+        private void LabelModpackName_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            labelModpackName.Visibility = Visibility.Collapsed;
+            inputModpackName.Visibility = Visibility.Visible;
+        }
+
+        private void ButtonSaveModpackName_Click(object sender, RoutedEventArgs e)
+        {
+            labelModpackName.Visibility = Visibility.Visible;
+            inputModpackName.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -9,25 +9,25 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="#EDF1F2">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width=".5*"/>
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height=".4*"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
-            <RowDefinition Height=".2*"/>
-            <RowDefinition Height=".4*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock FontWeight="SemiBold" FontSize="18" Margin="32 24 0 0" Foreground="#404040" Grid.Column="0" Grid.Row="0">New Modpack</TextBlock>
-        <Button Command="{Binding SelectThumbnail}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Grid.Column="0" Grid.Row="1">
-            <Image Source="pack://application:,,,/PUMM;component/Resources/add_ico.png" Width="64" RenderOptions.BitmapScalingMode="Fant"></Image>
+        <TextBlock FontWeight="SemiBold" FontSize="18" Margin="32 24 0 24" Foreground="#404040" Grid.Column="0" Grid.Row="0">New Modpack</TextBlock>
+        <Button Command="{Binding BrowseThumbnail}" Margin="32 0 0 0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Cursor="Hand" Grid.Column="0" Grid.Row="1">
+            <Image Source="{Binding Thumbnail}" RenderOptions.BitmapScalingMode="Fant"></Image>
         </Button>
-        <xctk:WatermarkTextBox Text="{Binding Path=Name, Mode=TwoWay}" FontSize="14" Foreground="#404040" Style="{StaticResource DisabledInput}" Grid.Column="0" Grid.Row="2" KeepWatermarkOnGotFocus="True">
+        <xctk:WatermarkTextBox Text="{Binding Path=Name, Mode=TwoWay}" Margin="0 0 32 0" Style="{StaticResource PrimaryInput}" VerticalAlignment="Center" FontSize="14" Foreground="#404040" KeepWatermarkOnGotFocus="True" Grid.Column="1" Grid.Row="1">
             <xctk:WatermarkTextBox.Watermark>
                 <TextBlock Text="Name" />
             </xctk:WatermarkTextBox.Watermark>
         </xctk:WatermarkTextBox>
-        <Button Style="{StaticResource Flat}" Command="{Binding AddModpack}" Grid.Column="0" Grid.Row="3">Add Modpack</Button>
+        <Button Command="{Binding AddModpack}" Height="56" Margin="128 12 128 12" Style="{StaticResource PrimaryButton}" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">Add Modpack</Button>
         
     </Grid>
 </UserControl>

@@ -21,6 +21,10 @@
         <DataTemplate DataType="{x:Type viewModel:NewModpackViewModel}">
             <view:NewModpack/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ModsViewModel}">
+            <view:Mods/>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -57,19 +61,34 @@
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Library</Label>
                 </DockPanel>
             </Button>
+            <Button Name="tabMods" Command="{Binding NavCommand}" CommandParameter="mods" Click="TabMods_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
+                <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/library_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Mods</Label>
+                </DockPanel>
+            </Button>
         </StackPanel>
 
         <Grid x:Name = "MainContent" Grid.Column="1" Grid.Row="1">
-            <ContentControl Content = "{Binding CurrentViewModel}" />
+            <ContentControl Content="{Binding CurrentViewModel}" />
         </Grid>
 
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Background="White" MaxHeight="88">
             <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
-                <Label HorizontalAlignment="Right">Real Madrid Full Mods 2019</Label>
-                <Label HorizontalAlignment="Right">8 CPKs</Label>
-
+                <Label Name="labelModpackName" HorizontalAlignment="Right" Content="{Binding Active.Name}" MouseLeftButtonUp="LabelModpackName_MouseLeftButtonUp" Cursor="Hand"/>
+                <StackPanel Name="inputModpackName" Orientation="Horizontal" Visibility="Collapsed">
+                    <TextBox HorizontalAlignment="Right" Text="{Binding Active.Name, Mode=TwoWay}" Style="{StaticResource PrimaryInput}"></TextBox>
+                    <Button Name="buttonSaveModpackName" Click="ButtonSaveModpackName_Click" Command="{Binding SetName}" Style="{StaticResource Icon}" Margin="4 0 4 0" Height="14">
+                        <Image Source="pack://application:,,,/PUMM;component/Resources/apply_icon.png" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    </Button>
+                </StackPanel>
+                <Label HorizontalAlignment="Right" Content="{Binding Active.Id}" ContentStringFormat="Mods: {0}"/>
             </StackPanel>
-            <Image Stretch="Fill" Width="88" Height="88" Source="pack://application:,,,/PUMM;component/Resources/menu_background.png"/>
+            <Button Command="{Binding BrowseThumbnail}" Style="{StaticResource ThumbnailButton}" Width="128" Height="88">
+                <Button.Background>
+                    <ImageBrush Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" ImageSource="{Binding Active.Thumbnail}"/>
+                </Button.Background>
+            </Button>
             
         </StackPanel>
     </Grid>

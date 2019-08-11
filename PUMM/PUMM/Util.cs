@@ -11,6 +11,7 @@ namespace PUMM
 {
     class Util
     {
+        /* Loads local image to show in XAML */
         public static ImageSource LoadThumbnail(string filepath)
         {
             var image = new BitmapImage();

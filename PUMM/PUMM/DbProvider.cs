@@ -61,28 +61,51 @@ namespace PUMM
             db.Close();
         }
 
+        /* Adds new modpack to database */
         public void addModpack(string name, string thumbnail)
         {
-            db.Open();
             string query = "INSERT INTO modpack (name, thumbnail, is_active) VALUES ('" + name + "', '" + thumbnail + "', 0)";
+
+            db.Open();
             SQLiteCommand command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
             db.Close();
         }
 
+        /* Retrieves every modpack from database */
         public ObservableCollection<Modpack> retrieveModpacks()
         {
             ObservableCollection<Modpack> modpacks = new ObservableCollection<Modpack>();
+            string query = "SELECT * FROM modpack";
 
             db.Open();
-            string query = "SELECT * FROM modpack";
             SQLiteCommand command = new SQLiteCommand(query, db);
             SQLiteDataReader reader = command.ExecuteReader();
-            while (reader.Read())
-                modpacks.Add(new Modpack { Name = reader.GetString(1), ImagePath = reader.GetString(2), IsActive = reader.GetBoolean(3) });
+            while(reader.Read())
+                modpacks.Add(new Modpack { Id = reader.GetInt32(0), Name = reader.GetString(1), ImagePath = reader.GetString(2) });
             db.Close();
 
             return modpacks;
+        }
+
+        public void updateModpack(int id, string column, string value)
+        {
+            string query = "UPDATE modpack SET " + column + " = '" + value + "' WHERE id = " + id;
+
+            db.Open();
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            command.ExecuteNonQuery();
+            db.Close();
+        }
+
+        public void deleteModpack(int id)
+        {
+            string query = "DELETE FROM modpack WHERE id = " + id;
+
+            db.Open();
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            command.ExecuteNonQuery();
+            db.Close();
         }
     }
 }

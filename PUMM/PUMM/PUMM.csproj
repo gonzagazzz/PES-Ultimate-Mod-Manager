@@ -74,12 +74,16 @@
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\LibraryViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="ViewModel\ModsViewModel.cs" />
     <Compile Include="ViewModel\NewModpackViewModel.cs" />
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Library.xaml.cs">
       <DependentUpon>Library.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Mods.xaml.cs">
+      <DependentUpon>Mods.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\NewModpack.xaml.cs">
       <DependentUpon>NewModpack.xaml</DependentUpon>
@@ -101,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Library.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Mods.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -149,16 +157,13 @@
     <Resource Include="Resources\library_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\delete_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\rename_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\thumbnail_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\add_ico.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\apply_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\delete_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
