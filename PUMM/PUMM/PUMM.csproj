@@ -67,6 +67,8 @@
     </ApplicationDefinition>
     <Compile Include="BindableBase.cs" />
     <Compile Include="DbProvider.cs" />
+    <Compile Include="DpFileListUtil.cs" />
+    <Compile Include="Model\Mod.cs" />
     <Compile Include="Model\Modpack.cs" />
     <Compile Include="MyICommand.cs" />
     <Compile Include="SizeObserver.cs" />

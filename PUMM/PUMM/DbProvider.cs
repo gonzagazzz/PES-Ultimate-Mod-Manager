@@ -34,30 +34,33 @@ namespace PUMM
         public void migrate()
         {
             db.Open();
-            string query = "CREATE TABLE modpack (" +
+            string query = "CREATE TABLE settings (" +
+                "'property' TEXT NOT NULL," +
+                "'value' TEXT," +
+                "PRIMARY KEY('property')" +
+                ")";
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            command.ExecuteNonQuery();
+
+            query = "CREATE TABLE modpack (" +
                 "'id' INTEGER NOT NULL," +
                 "'name' TEXT," +
                 "'thumbnail' TEXT," +
                 "'is_active' INTEGER NOT NULL," +
                 "PRIMARY KEY('id')" +
                 ")";
-            SQLiteCommand command = new SQLiteCommand(query, db);
+            command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
 
             query = "CREATE TABLE mod (" +
                 "'id' INTEGER NOT NULL," +
-                "'filepath' TEXT NOT NULL," +
+                "'filename' TEXT NOT NULL," +
+                "'modpack_id' INTEGER NOT NULL," +
                 "PRIMARY KEY('id')" +
                 ")";
             command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
-
-            query = "CREATE TABLE mod_modpack (" +
-                "'id_mod' INTEGER NOT NULL," +
-                "'id_modpack' INTEGER NOT NULL" +
-                ")";
-            command = new SQLiteCommand(query, db);
-            command.ExecuteNonQuery();
+            
             db.Close();
         }
 
@@ -88,6 +91,7 @@ namespace PUMM
             return modpacks;
         }
 
+        /* Updates modpack property with given id */
         public void updateModpack(int id, string column, string value)
         {
             string query = "UPDATE modpack SET " + column + " = '" + value + "' WHERE id = " + id;
@@ -98,6 +102,7 @@ namespace PUMM
             db.Close();
         }
 
+        /* Deletes modpack with given id */
         public void deleteModpack(int id)
         {
             string query = "DELETE FROM modpack WHERE id = " + id;
@@ -106,6 +111,26 @@ namespace PUMM
             SQLiteCommand command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
             db.Close();
+        }
+
+        public void addModsToModpack(Modpack modpack, ObservableCollection<Mod> mods)
+        {
+            // SQL
+        }
+
+        public bool modpackHasMod(Modpack modpack, string modFilename)
+        {
+            if (modpack == null)
+                return false;
+
+            string query = "SELECT * FROM mod WHERE filename = '" + modFilename + "' AND modpack_id = " + modpack.Id;
+
+            db.Open();
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = command.ExecuteReader();
+            bool hasMod = reader.Read();
+            db.Close();
+            return hasMod;
         }
     }
 }

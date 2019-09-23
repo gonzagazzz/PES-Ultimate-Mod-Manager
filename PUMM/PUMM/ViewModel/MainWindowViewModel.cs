@@ -59,7 +59,7 @@ namespace PUMM.ViewModel
                     CurrentViewModel = new NewModpackViewModel(db);
                     break;
                 case "mods":
-                    CurrentViewModel = new ModsViewModel();
+                    CurrentViewModel = new ModsViewModel(db, this);
                     break;
                 default:
                     break;
