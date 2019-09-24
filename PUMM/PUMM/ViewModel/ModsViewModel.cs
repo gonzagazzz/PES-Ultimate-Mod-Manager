@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using PUMM.Model;
 using System.Collections.ObjectModel;
+using System.Windows;
 
 namespace PUMM.ViewModel
 {
@@ -49,7 +50,8 @@ namespace PUMM.ViewModel
 
         private void saveModpack(string s)
         {
-            db.addModsToModpack(main.Active, Mods);
+            if(db.addModsToModpack(main.Active, Mods))
+                MessageBox.Show(main.Active.Name + " mods saved successfully", "Mods saved", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }

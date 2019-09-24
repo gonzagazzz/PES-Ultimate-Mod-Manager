@@ -21,11 +21,11 @@ namespace PUMM
             if (!File.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "pumm.sqlite"))
             {
                 SQLiteConnection.CreateFile("pumm.sqlite");
-                db = new SQLiteConnection("Data Source=pumm.sqlite;Version=3;");
+                db = new SQLiteConnection("Data Source=pumm.sqlite;Version=3;journal_mode=WAL;");
                 migrate();
             } else
             {
-                db = new SQLiteConnection("Data Source=pumm.sqlite;Version=3;");
+                db = new SQLiteConnection("Data Source=pumm.sqlite;Version=3;journal_mode=WAL;");
             }
             
         }
@@ -113,9 +113,48 @@ namespace PUMM
             db.Close();
         }
 
-        public void addModsToModpack(Modpack modpack, ObservableCollection<Mod> mods)
+        /* Updates modpack list of mods
+         * Returns true if a modpack is active, false otherwise */
+        public bool addModsToModpack(Modpack modpack, ObservableCollection<Mod> mods)
         {
-            // SQL
+            if (modpack == null)
+                return false;
+
+            string query;
+            bool exists = false;
+
+            db.Open();
+            foreach(Mod mod in mods)
+            {
+                /* Selects current mod from database to check if exists */
+                query = "SELECT * FROM mod WHERE filename = '" + mod.Filename + "' AND modpack_id = " + modpack.Id;
+                SQLiteCommand select = new SQLiteCommand(query, db);
+                SQLiteDataReader reader = select.ExecuteReader();
+                exists = reader.Read();
+
+                /* If CPK is checked and doesn't exist in modpack, adds it
+                 * otherwise, if CPK is not checked but exist in modpack, removes it */
+                if(mod.Selected)
+                {
+                    if(!exists)
+                    {
+                        query = "INSERT INTO mod (filename, modpack_id) VALUES ('" + mod.Filename + "', " + modpack.Id + ")";
+                        using (var cmd = new SQLiteCommand(query, db))
+                            cmd.ExecuteNonQuery();
+                    }
+                }
+                else
+                {
+                    if(exists)
+                    {
+                        query = "DELETE FROM mod WHERE filename = '" + mod.Filename + "' AND modpack_id = " + modpack.Id;
+                        using (var cmd = new SQLiteCommand(query, db))
+                            cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            db.Close();
+            return true;
         }
 
         public bool modpackHasMod(Modpack modpack, string modFilename)
