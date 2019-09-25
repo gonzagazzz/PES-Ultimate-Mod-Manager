@@ -22,7 +22,7 @@
         <Button Command="{Binding BrowseThumbnail}" Margin="32 0 0 0" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" Cursor="Hand" Grid.Column="0" Grid.Row="1">
             <Image Source="{Binding Thumbnail}" RenderOptions.BitmapScalingMode="Fant"></Image>
         </Button>
-        <xctk:WatermarkTextBox Text="{Binding Path=Name, Mode=TwoWay}" Margin="0 0 32 0" Style="{StaticResource PrimaryInput}" VerticalAlignment="Center" FontSize="14" Foreground="#404040" KeepWatermarkOnGotFocus="True" Grid.Column="1" Grid.Row="1">
+        <xctk:WatermarkTextBox Text="{Binding Path=Name, Mode=OneWayToSource}" Margin="0 0 32 0" Style="{StaticResource PrimaryInput}" VerticalAlignment="Center" FontSize="14" Foreground="#404040" KeepWatermarkOnGotFocus="True" Grid.Column="1" Grid.Row="1">
             <xctk:WatermarkTextBox.Watermark>
                 <TextBlock Text="Name" />
             </xctk:WatermarkTextBox.Watermark>

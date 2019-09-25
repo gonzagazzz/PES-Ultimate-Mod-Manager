@@ -10,6 +10,8 @@ namespace PUMM.Model
         private int id;
         private string name;
         private string filepath;
+        private int version;
+        private int mods;
 
         public int Id
         {
@@ -19,7 +21,7 @@ namespace PUMM.Model
                 if (id != value)
                 {
                     id = value;
-                    RaisePropertyChanged("name");
+                    RaisePropertyChanged("id");
                 }
             }
         }
@@ -33,6 +35,19 @@ namespace PUMM.Model
                 {
                     name = value;
                     RaisePropertyChanged("name");
+                }
+            }
+        }
+
+        public int Version
+        {
+            get { return version; }
+            set
+            {
+                if (version != value)
+                {
+                    version = value;
+                    RaisePropertyChanged("version");
                 }
             }
         }
@@ -54,6 +69,19 @@ namespace PUMM.Model
         public ImageSource Thumbnail
         {
             get { return Util.LoadThumbnail(filepath); }
+        }
+
+        public int Mods
+        {
+            get { return mods; }
+            set
+            {
+                if (mods != value)
+                {
+                    mods = value;
+                    RaisePropertyChanged("mods");
+                }
+            }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

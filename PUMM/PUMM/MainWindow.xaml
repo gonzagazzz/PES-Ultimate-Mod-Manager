@@ -63,7 +63,7 @@
             </Button>
             <Button Name="tabMods" Command="{Binding NavCommand}" CommandParameter="mods" Click="TabMods_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
                 <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/library_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/mods_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Mods</Label>
                 </DockPanel>
             </Button>

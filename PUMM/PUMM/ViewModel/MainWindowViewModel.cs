@@ -15,12 +15,23 @@ namespace PUMM.ViewModel
         private HomeViewModel home;
         private DbProvider db;
         private Modpack active;
+        private int version;
+        string download;
 
         public MainWindowViewModel()
         {
             db = new DbProvider();
+            version = 2019; // MUST CHANGE TO LAST SESSION VERSION
+
             /* Initializes needed ViewModels */
-            home = new HomeViewModel();
+            home = new HomeViewModel(db, this);
+
+            // Gets current PES version download path and updates Home page hyperlink
+            string download = db.getSetting("pes" + version + "_path");
+            if (String.IsNullOrEmpty(download))
+                home.DownloadPath = "Browse PES download folder...";
+            else
+                home.DownloadPath = download;
 
             CurrentViewModel = home;
             NavCommand = new MyICommand<string>(OnNav);
@@ -41,6 +52,20 @@ namespace PUMM.ViewModel
             set { SetProperty(ref active, value); }
         }
 
+        public int Version
+        {
+            get { return version; }
+            set { SetProperty(ref version, value); }
+        }
+
+        public string DownloadPath
+        {
+            get { return download; }
+            set {
+                SetProperty(ref download, value);
+            }
+        }
+
         public MyICommand<string> NavCommand { get; private set; }
         public MyICommand<string> BrowseThumbnail { get; private set; }
         public MyICommand<string> SetName { get; private set; }
@@ -56,7 +81,7 @@ namespace PUMM.ViewModel
                     CurrentViewModel = new LibraryViewModel(db, this);
                     break;
                 case "new_modpack":
-                    CurrentViewModel = new NewModpackViewModel(db);
+                    CurrentViewModel = new NewModpackViewModel(db, this);
                     break;
                 case "mods":
                     CurrentViewModel = new ModsViewModel(db, this);

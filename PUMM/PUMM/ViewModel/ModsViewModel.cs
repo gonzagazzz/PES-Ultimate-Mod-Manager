@@ -26,7 +26,7 @@ namespace PUMM.ViewModel
             SaveModpack = new MyICommand<string>(saveModpack);
 
             /* Creates every mod inside download folder */
-            string[] files = DpFileListUtil.getCpks(@"E:\Games\Pro Evolution Soccer 2019\download");
+            string[] files = DpFileListUtil.getCpks(main.DownloadPath);
             foreach(string filename in files)
             {
                 Mods.Add(new Mod { Filename = filename, Selected = db.modpackHasMod(main.Active, filename) });

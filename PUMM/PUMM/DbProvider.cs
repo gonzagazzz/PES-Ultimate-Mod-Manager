@@ -45,6 +45,7 @@ namespace PUMM
             query = "CREATE TABLE modpack (" +
                 "'id' INTEGER NOT NULL," +
                 "'name' TEXT," +
+                "'version' INTEGER NOT NULL," +
                 "'thumbnail' TEXT," +
                 "'is_active' INTEGER NOT NULL," +
                 "PRIMARY KEY('id')" +
@@ -65,9 +66,9 @@ namespace PUMM
         }
 
         /* Adds new modpack to database */
-        public void addModpack(string name, string thumbnail)
+        public void addModpack(string name, int version, string thumbnail)
         {
-            string query = "INSERT INTO modpack (name, thumbnail, is_active) VALUES ('" + name + "', '" + thumbnail + "', 0)";
+            string query = "INSERT INTO modpack (name, version, thumbnail, is_active) VALUES ('" + name + "', " + version + ", '" + thumbnail + "', 0)";
 
             db.Open();
             SQLiteCommand command = new SQLiteCommand(query, db);
@@ -76,16 +77,16 @@ namespace PUMM
         }
 
         /* Retrieves every modpack from database */
-        public ObservableCollection<Modpack> retrieveModpacks()
+        public ObservableCollection<Modpack> retrieveModpacks(int version)
         {
             ObservableCollection<Modpack> modpacks = new ObservableCollection<Modpack>();
-            string query = "SELECT * FROM modpack";
+            string query = "SELECT * FROM modpack WHERE version = " + version;
 
             db.Open();
             SQLiteCommand command = new SQLiteCommand(query, db);
             SQLiteDataReader reader = command.ExecuteReader();
             while(reader.Read())
-                modpacks.Add(new Modpack { Id = reader.GetInt32(0), Name = reader.GetString(1), ImagePath = reader.GetString(2) });
+                modpacks.Add(new Modpack { Id = reader.GetInt32(0), Name = reader.GetString(1), Version = reader.GetInt32(2), ImagePath = reader.GetString(3) });
             db.Close();
 
             return modpacks;
@@ -170,6 +171,65 @@ namespace PUMM
             bool hasMod = reader.Read();
             db.Close();
             return hasMod;
+        }
+
+        public int countMods(Modpack modpack)
+        {
+            if (modpack == null)
+                return 0;
+
+            string query = "SELECT * FROM mod WHERE modpack_id = " + modpack.Id;
+            int mods = 0;
+
+            db.Open();
+            SQLiteCommand cmd = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = cmd.ExecuteReader();
+            while (reader.Read())
+                mods++;
+            reader.Close();
+            db.Close();
+
+            return mods;
+        }
+
+        public void newSetting(string property, string value)
+        {
+            string query = "SELECT * FROM settings WHERE property = '" + property + "'";
+
+            db.Open();
+            SQLiteCommand select = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = select.ExecuteReader();
+            bool exists = reader.Read();
+            reader.Close();
+
+            if (exists) // setting already exists, overwrite it
+            {
+                query = "UPDATE settings SET value = '" + value + "' WHERE property = '" + property + "'";
+                using (var cmd = new SQLiteCommand(query, db))
+                    cmd.ExecuteNonQuery();
+            }
+            else // does not exist, create it
+            {
+                query = "INSERT INTO settings (property, value) VALUES ('" + property + "', '" + value + "')";
+                using (var cmd = new SQLiteCommand(query, db))
+                    cmd.ExecuteNonQuery();
+            }
+            db.Close();
+        }
+
+        public string getSetting(string property)
+        {
+            string query = "SELECT * FROM settings WHERE property = '" + property + "'";
+            string value = "";
+            db.Open();
+            SQLiteCommand select = new SQLiteCommand(query, db);
+            using (var reader = select.ExecuteReader())
+            {
+                if (reader.Read())
+                    value = reader.GetString(1);
+            }
+            db.Close();
+            return value;
         }
     }
 }

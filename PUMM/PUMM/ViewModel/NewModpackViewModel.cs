@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace PUMM.ViewModel
@@ -15,10 +16,12 @@ namespace PUMM.ViewModel
         private DbProvider db;
         private string name;
         private ImageSource thumbnail;
+        private MainWindowViewModel main;
 
-        public NewModpackViewModel(DbProvider db)
+        public NewModpackViewModel(DbProvider db, MainWindowViewModel main)
         {
             this.db = db;
+            this.main = main;
             Thumbnail = Util.LoadThumbnail(@"C:\Users\GonzagaZZZ\Desktop\modpack example\199376822.jpeg"); // default modpack thumbnail
 
             AddModpack = new MyICommand<string>(addModpack);
@@ -56,7 +59,7 @@ namespace PUMM.ViewModel
 
         public void addModpack(string s)
         {
-            if(!String.IsNullOrEmpty(thumbnailPath))
+            if (!String.IsNullOrEmpty(thumbnailPath))
             {
                 // creates folder to store modpacks' thumbnails
                 FileInfo path = new FileInfo(System.AppDomain.CurrentDomain.BaseDirectory + @"thumbnails\");
@@ -64,8 +67,8 @@ namespace PUMM.ViewModel
                 // creates a copy of the selected image in 'thumbnails' folder
                 File.Copy(thumbnailPath, path.Directory + @"\" + thumbnailName, true);
                 // creates modpack entry in database
-                db.addModpack(Name, path.Directory + @"\" + thumbnailName);
-                MessageBox.Show(Name + " successfully added", "Modpack Added");
+                db.addModpack(Name, main.Version, path.Directory + @"\" + thumbnailName);
+                MessageBox.Show(Name + " successfully added", "Modpack added", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

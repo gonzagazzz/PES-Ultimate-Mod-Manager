@@ -22,7 +22,7 @@ namespace PUMM.ViewModel
         public LibraryViewModel(DbProvider db, MainWindowViewModel main)
         {
             this.db = db;
-            Modpacks = db.retrieveModpacks();
+            Modpacks = db.retrieveModpacks(main.Version);
             this.main = main;
 
             //Print = new MyICommand<string>(printForDebug);
