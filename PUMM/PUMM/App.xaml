@@ -89,6 +89,29 @@
             </Style.Triggers>
         </Style>
 
+        <Style TargetType="{x:Type Button}" x:Key="Close">
+            <Setter Property="Background" Value="#EA334F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="30" BorderBrush="#007ACC" BorderThickness="0" Padding="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C21A3B"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#EA334F"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
         <Style TargetType="{x:Type TextBox}" x:Key="PrimaryInput">
             <Setter Property="Padding" Value="32 0 0 0"/>
             <Setter Property="Background" Value="Transparent"/>

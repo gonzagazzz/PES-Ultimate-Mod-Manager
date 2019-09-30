@@ -13,28 +13,49 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- Used to check right PES version -->
-        <TextBlock x:Name="Version" Text="{Binding CurrentVersion}" />
-
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1">
-            <RadioButton GroupName="Version" IsChecked="{Binding Path=VersionSelection[0], Mode=TwoWay}" Command="{Binding SetVersion}" CommandParameter="2019" Style="{StaticResource Option}" Margin="4 0 48 0" Width="256">
-                <Image Source="pack://application:,,,/PUMM;component/Resources/pes2019.png" RenderOptions.BitmapScalingMode="Fant" Margin="16 0 0 0"/>
-            </RadioButton>
-            <RadioButton GroupName="Version" IsChecked="{Binding Path=VersionSelection[1], Mode=TwoWay}" Command="{Binding SetVersion}" CommandParameter="2020" Style="{StaticResource Option}" Margin="4 0 48 0" Width="256">
-                <Image Source="pack://application:,,,/PUMM;component/Resources/pes2020.png" RenderOptions.BitmapScalingMode="Fant" Margin="16 0 0 0"/>
-            </RadioButton>
+        <StackPanel Orientation="Vertical" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
+            <Button Command="{Binding Import}" Style="{StaticResource Flat}" Margin="12 12 12 0" HorizontalAlignment="Right" Width="156">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/import_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="0 0 16 0" Height="20"/>
+                    <TextBlock VerticalAlignment="Center">Import Modpack</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding Export}" Style="{StaticResource Flat}" Margin="12 6 12 0" HorizontalAlignment="Right" Width="156">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/export_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="0 0 16 0" Height="20"/>
+                    <TextBlock VerticalAlignment="Center">Export Modpack</TextBlock>
+                </StackPanel>
+            </Button>
         </StackPanel>
-        <TextBlock HorizontalAlignment="Center" Margin="0 14 0 24" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2">
-            <Hyperlink Command="{Binding BrowseDownload}">
-                <TextBlock Text="{Binding Path=DownloadPath}"/>
-            </Hyperlink>
-        </TextBlock>
-        <Button Style="{StaticResource PrimaryButton}" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="3" Margin="128 0 128 0">Generate DpFileList</Button>
+        
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <RadioButton GroupName="Version" IsChecked="{Binding Path=VersionSelection[0], Mode=TwoWay}" Command="{Binding SetVersion}" CommandParameter="2019" Style="{StaticResource Option}" Margin="24 0 24 0" Width="220">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/pes2019.png" RenderOptions.BitmapScalingMode="Fant" Margin="16 0 0 0"/>
+                </RadioButton>
+                <RadioButton GroupName="Version" IsChecked="{Binding Path=VersionSelection[1], Mode=TwoWay}" Command="{Binding SetVersion}" CommandParameter="2020" Style="{StaticResource Option}" Margin="24 0 24 0" Width="220">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/pes2020.png" RenderOptions.BitmapScalingMode="Fant" Margin="16 0 0 0"/>
+                </RadioButton>
+            </StackPanel>
+
+            <TextBlock HorizontalAlignment="Center" Margin="0 12 0 0">
+                <Hyperlink x:Name="Browse" Command="{Binding BrowseDownload}" MouseRightButtonUp="Browse_MouseRightButtonUp">
+                    <Hyperlink.ContextMenu>
+                        <ContextMenu x:Name="MenuBrowse" StaysOpen="true" Visibility="Collapsed">
+                            <MenuItem Header="Open in Explorer" Command="{Binding OpenExplorer}"/>
+                            <MenuItem Header="Clear Path" Command="{Binding RemovePath}"/>
+                        </ContextMenu>
+                    </Hyperlink.ContextMenu>
+                    <TextBlock x:Name="DownloadPath" Text="{Binding Path=DownloadPath}"/>
+                </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+
+        <Button Command="{Binding GenerateBinary}" Style="{StaticResource PrimaryButton}" Margin="32 16 32 16" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2">Generate DpFileList</Button>
     </Grid>
 </UserControl>

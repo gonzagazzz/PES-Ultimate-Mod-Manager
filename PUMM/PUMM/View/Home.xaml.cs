@@ -24,5 +24,17 @@ namespace PUMM.View
         {
             InitializeComponent();
         }
+
+        private void Browse_MouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (DownloadPath.Text == "Browse PES download folder...")
+            {
+                MenuBrowse.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                MenuBrowse.Visibility = Visibility.Visible;
+            }
+        }
     }
 }

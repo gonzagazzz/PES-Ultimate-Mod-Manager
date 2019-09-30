@@ -73,6 +73,7 @@
     <Compile Include="DbProvider.cs" />
     <Compile Include="DpFileListUtil.cs" />
     <Compile Include="ExcelProvider.cs" />
+    <Compile Include="Messages.cs" />
     <Compile Include="Model\Mod.cs" />
     <Compile Include="Model\Modpack.cs" />
     <Compile Include="MyICommand.cs" />
@@ -158,28 +159,40 @@
     <Resource Include="Resources\menu_background.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\home_ico.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\library_icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\add_ico.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\apply_icon.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\delete_icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\mods_ico.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\pes2019.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\pes2020.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\add_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\close_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\home_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\library_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\mods_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\import_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\export_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\select_thumbnail.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

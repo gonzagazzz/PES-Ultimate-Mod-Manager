@@ -66,14 +66,37 @@ namespace PUMM
         }
 
         /* Adds new modpack to database */
-        public void addModpack(string name, int version, string thumbnail)
+        public int addModpack(string name, int version, string thumbnail)
         {
             string query = "INSERT INTO modpack (name, version, thumbnail, is_active) VALUES ('" + name + "', " + version + ", '" + thumbnail + "', 0)";
 
             db.Open();
             SQLiteCommand command = new SQLiteCommand(query, db);
             command.ExecuteNonQuery();
+
+            query = "SELECT last_insert_rowid();";
+            command = new SQLiteCommand(query, db);
+            int id = Int32.Parse(command.ExecuteScalar().ToString());
             db.Close();
+
+            return id;
+        }
+
+        /* Returns id of modpack if exists, -1 otherwise */
+        public Modpack getModpack(string name)
+        {
+            string query = "SELECT * FROM modpack WHERE name = '" + name + "'";
+            Modpack modpack = null;
+
+            db.Open();
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = command.ExecuteReader();
+            if (reader.Read())
+                modpack = new Modpack { Id = reader.GetInt32(0), Name = reader.GetString(1), Version = reader.GetInt32(2), ImagePath = reader.GetString(3) };
+            reader.Close();
+            db.Close();
+
+            return modpack;
         }
 
         /* Retrieves every modpack from database */
@@ -109,53 +132,80 @@ namespace PUMM
             string query = "DELETE FROM modpack WHERE id = " + id;
 
             db.Open();
-            SQLiteCommand command = new SQLiteCommand(query, db);
-            command.ExecuteNonQuery();
+            SQLiteCommand cmd = new SQLiteCommand(query, db);
+            cmd.ExecuteNonQuery();
+
+            query = "DELETE FROM mod WHERE modpack_id = " + id;
+            cmd = new SQLiteCommand(query, db);
+            cmd.ExecuteNonQuery();
             db.Close();
         }
 
         /* Updates modpack list of mods
-         * Returns true if a modpack is active, false otherwise */
-        public bool addModsToModpack(Modpack modpack, ObservableCollection<Mod> mods)
+         * Returns number of mods in modpack if a modpack is active, -1 otherwise */
+        public void addModsToModpack(Modpack modpack, ObservableCollection<string> checkedMods, List<string> remainingMods)
         {
-            if (modpack == null)
-                return false;
-
             string query;
             bool exists = false;
 
             db.Open();
-            foreach(Mod mod in mods)
+            foreach(string mod in checkedMods)
             {
                 /* Selects current mod from database to check if exists */
-                query = "SELECT * FROM mod WHERE filename = '" + mod.Filename + "' AND modpack_id = " + modpack.Id;
+                query = "SELECT * FROM mod WHERE filename = '" + mod + "' AND modpack_id = " + modpack.Id;
                 SQLiteCommand select = new SQLiteCommand(query, db);
                 SQLiteDataReader reader = select.ExecuteReader();
                 exists = reader.Read();
 
-                /* If CPK is checked and doesn't exist in modpack, adds it
-                 * otherwise, if CPK is not checked but exist in modpack, removes it */
-                if(mod.Selected)
+                /* If CPK is checked and doesn't exist in modpack, adds it */
+                if (!exists)
                 {
-                    if(!exists)
-                    {
-                        query = "INSERT INTO mod (filename, modpack_id) VALUES ('" + mod.Filename + "', " + modpack.Id + ")";
-                        using (var cmd = new SQLiteCommand(query, db))
-                            cmd.ExecuteNonQuery();
-                    }
+                    query = "INSERT INTO mod (filename, modpack_id) VALUES ('" + mod + "', " + modpack.Id + ")";
+                    using (var cmd = new SQLiteCommand(query, db))
+                        cmd.ExecuteNonQuery();
                 }
-                else
+            }
+
+            if(remainingMods != null)
+            {
+                foreach (string mod in remainingMods)
                 {
-                    if(exists)
+                    /* Selects current mod from database to check if exists */
+                    query = "SELECT * FROM mod WHERE filename = '" + mod + "' AND modpack_id = " + modpack.Id;
+                    SQLiteCommand select = new SQLiteCommand(query, db);
+                    SQLiteDataReader reader = select.ExecuteReader();
+                    exists = reader.Read();
+
+                    /* If CPK is not checked but exist in modpack, removes it */
+                    if (exists)
                     {
-                        query = "DELETE FROM mod WHERE filename = '" + mod.Filename + "' AND modpack_id = " + modpack.Id;
+                        query = "DELETE FROM mod WHERE filename = '" + mod + "' AND modpack_id = " + modpack.Id;
                         using (var cmd = new SQLiteCommand(query, db))
                             cmd.ExecuteNonQuery();
                     }
                 }
             }
             db.Close();
-            return true;
+        }
+
+        public List<string> getMods(Modpack modpack)
+        {
+            if (modpack == null)
+                return null;
+            
+            string query = "SELECT * FROM mod WHERE modpack_id = " + modpack.Id;
+            List<string> mods = new List<string>();
+
+            db.Open();
+            SQLiteCommand command = new SQLiteCommand(query, db);
+            SQLiteDataReader reader = command.ExecuteReader();
+            while(reader.Read())
+                mods.Add(reader.GetString(1));
+            db.Close();
+            
+            // Sorts mods to respect order of DLCs
+            mods = DpFileListUtil.arrangeDLC(mods);
+            return mods;
         }
 
         public bool modpackHasMod(Modpack modpack, string modFilename)
@@ -169,27 +219,9 @@ namespace PUMM
             SQLiteCommand command = new SQLiteCommand(query, db);
             SQLiteDataReader reader = command.ExecuteReader();
             bool hasMod = reader.Read();
-            db.Close();
-            return hasMod;
-        }
-
-        public int countMods(Modpack modpack)
-        {
-            if (modpack == null)
-                return 0;
-
-            string query = "SELECT * FROM mod WHERE modpack_id = " + modpack.Id;
-            int mods = 0;
-
-            db.Open();
-            SQLiteCommand cmd = new SQLiteCommand(query, db);
-            SQLiteDataReader reader = cmd.ExecuteReader();
-            while (reader.Read())
-                mods++;
             reader.Close();
             db.Close();
-
-            return mods;
+            return hasMod;
         }
 
         public void newSetting(string property, string value)
@@ -230,6 +262,16 @@ namespace PUMM
             }
             db.Close();
             return value;
+        }
+
+        public void removeSetting(string property)
+        {
+            string query = "DELETE FROM settings WHERE property = '" + property + "'";
+
+            db.Open();
+            SQLiteCommand cmd = new SQLiteCommand(query, db);
+            cmd.ExecuteNonQuery();
+            db.Close();
         }
     }
 }

@@ -63,9 +63,9 @@ namespace PUMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap add_ico {
+        public static System.Drawing.Bitmap add_icon {
             get {
-                object obj = ResourceManager.GetObject("add_ico", resourceCulture);
+                object obj = ResourceManager.GetObject("add_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -83,6 +83,16 @@ namespace PUMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap close_icon {
+            get {
+                object obj = ResourceManager.GetObject("close_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap delete_icon {
             get {
                 object obj = ResourceManager.GetObject("delete_icon", resourceCulture);
@@ -93,9 +103,29 @@ namespace PUMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap home_ico {
+        public static System.Drawing.Bitmap export_icon {
             get {
-                object obj = ResourceManager.GetObject("home_ico", resourceCulture);
+                object obj = ResourceManager.GetObject("export_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap home_icon {
+            get {
+                object obj = ResourceManager.GetObject("home_icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap import_icon {
+            get {
+                object obj = ResourceManager.GetObject("import_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +163,9 @@ namespace PUMM.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        public static System.Drawing.Bitmap mods_ico {
+        public static System.Drawing.Bitmap mods_icon {
             get {
-                object obj = ResourceManager.GetObject("mods_ico", resourceCulture);
+                object obj = ResourceManager.GetObject("mods_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -156,6 +186,16 @@ namespace PUMM.Properties {
         public static System.Drawing.Bitmap pes2020 {
             get {
                 object obj = ResourceManager.GetObject("pes2020", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap select_thumbnail {
+            get {
+                object obj = ResourceManager.GetObject("select_thumbnail", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

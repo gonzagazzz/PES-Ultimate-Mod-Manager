@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace PUMM.ViewModel
 {
@@ -22,7 +23,7 @@ namespace PUMM.ViewModel
         {
             this.db = db;
             this.main = main;
-            Thumbnail = Util.LoadThumbnail(@"C:\Users\GonzagaZZZ\Desktop\modpack example\199376822.jpeg"); // default modpack thumbnail
+            Thumbnail = new BitmapImage(new Uri("pack://application:,,,/PUMM;component/Resources/select_thumbnail.png", UriKind.Absolute));
 
             AddModpack = new MyICommand<string>(addModpack);
             BrowseThumbnail = new MyICommand<string>(selectThumbnail);
@@ -59,17 +60,37 @@ namespace PUMM.ViewModel
 
         public void addModpack(string s)
         {
-            if (!String.IsNullOrEmpty(thumbnailPath))
+            if(String.IsNullOrEmpty(Name))
             {
-                // creates folder to store modpacks' thumbnails
-                FileInfo path = new FileInfo(System.AppDomain.CurrentDomain.BaseDirectory + @"thumbnails\");
-                path.Directory.Create();
-                // creates a copy of the selected image in 'thumbnails' folder
-                File.Copy(thumbnailPath, path.Directory + @"\" + thumbnailName, true);
-                // creates modpack entry in database
-                db.addModpack(Name, main.Version, path.Directory + @"\" + thumbnailName);
-                MessageBox.Show(Name + " successfully added", "Modpack added", MessageBoxButton.OK, MessageBoxImage.Information);
+                string[] error = Messages.error("EmptyModpackName", null);
+                MessageBox.Show(error[0], error[1], MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            if (String.IsNullOrEmpty(thumbnailPath))
+            {
+                string[] error = Messages.error("EmptyModpackThumbnail", null);
+                MessageBox.Show(error[0], error[1], MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (db.getModpack(Name) != null)
+            {
+                string[] error = Messages.error("ModpackAlreadyExists", new string[] { Name });
+                MessageBox.Show(error[0], error[1], MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            // creates folder to store modpacks' thumbnails
+            FileInfo path = new FileInfo(System.AppDomain.CurrentDomain.BaseDirectory + @"thumbnails\");
+            path.Directory.Create();
+            // creates a copy of the selected image in 'thumbnails' folder
+            File.Copy(thumbnailPath, path.Directory + @"\" + thumbnailName, true);
+            // creates modpack entry in database
+            int id = db.addModpack(Name, main.Version, path.Directory + @"\" + thumbnailName);
+
+            string[] success = Messages.success("ModpackAdded", new string[] { Name });
+            MessageBox.Show(success[0], success[1], MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
     }

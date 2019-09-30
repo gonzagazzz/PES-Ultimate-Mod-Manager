@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PUMM.Model;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,6 +28,11 @@ namespace PUMM.ViewModel
 
             SetVersion = new MyICommand<string>(updateVersion);
             BrowseDownload = new MyICommand<string>(updateDownloadPath);
+            Import = new MyICommand<string>(importModpack);
+            Export = new MyICommand<string>(exportModpack);
+            GenerateBinary = new MyICommand<string>(generateDpFileList);
+            OpenExplorer = new MyICommand<string>(openInExplorer);
+            RemovePath = new MyICommand<string>(removePath);
         }
 
         public string DownloadPath
@@ -44,10 +51,21 @@ namespace PUMM.ViewModel
 
         public MyICommand<string> SetVersion { get; private set; }
         public MyICommand<string> BrowseDownload { get; private set; }
+        public MyICommand<string> Import { get; private set; }
+        public MyICommand<string> Export { get; private set; }
+        public MyICommand<string> GenerateBinary { get; private set; }
+        public MyICommand<string> OpenExplorer { get; private set; }
+        public MyICommand<string> RemovePath { get; private set; }
 
         private void updateVersion(string version)
         {
             main.Version = Int32.Parse(version);
+            // Sets title accordingly
+            main.Title = "PES Ultimate Mod Manager - PES " + version;
+            // Resets active modpack
+            main.Active = null;
+            // Resets textbox with modpack's name to hide Close button
+            main.PotentialName = string.Empty;
             // Updates checked and unchecked PES versions
             updateCheckedVersions();
 
@@ -83,5 +101,69 @@ namespace PUMM.ViewModel
                     break;
             }
         }
+
+        private void importModpack(string s)
+        {
+            Modpack modpack = ExcelProvider.import(db);
+            if(modpack != null)
+            {
+                string[] success = Messages.success("ModpackImported", new string[] { modpack.Name });
+                MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void exportModpack(string s)
+        {
+            if (main.Active == null)
+            {
+                string[] error = Messages.error("NoActiveModpack", null);
+                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+            ExcelProvider.export(main.Active);
+            string[] success = Messages.success("ModpackExported", new string[] { main.Active.Name });
+            MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void generateDpFileList(string s)
+        {
+            if(DownloadPath == "Browse PES download folder...")
+            {
+                string[] error = Messages.error("PathNotSet", new string[] { main.Version.ToString() });
+                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(main.Active == null)
+            {
+                string[] error = Messages.error("NoActiveModpack", null);
+                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if(main.Active.Mods.Count == 0)
+            {
+                string[] error = Messages.error("EmptyModpack", new string[] { main.Active.Name });
+                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            DpFileListUtil.generate(main.Active.Mods, main.Active.Version, DownloadPath + @"\DpFileList.bin");
+            string[] success = Messages.success("GeneratedFromModpack", new string[] { main.Active.Name });
+            MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void openInExplorer(string s)
+        {
+            Process.Start(db.getSetting("pes" + main.Version + "_path"));
+        }
+
+        private void removePath(string s)
+        {
+            db.removeSetting("pes" + main.Version + "_path");
+            DownloadPath = "Browse PES download folder...";
+        }
+
     }
 }

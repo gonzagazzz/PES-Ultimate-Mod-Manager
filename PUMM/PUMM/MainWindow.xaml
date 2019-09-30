@@ -3,12 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:local="clr-namespace:PUMM"
         xmlns:view="clr-namespace:PUMM.View"
         xmlns:viewModel="clr-namespace:PUMM.ViewModel"
         mc:Ignorable="d"
-        Title="MainWindow" MinWidth="900" MinHeight="600" WindowStartupLocation="CenterScreen">
+        Title="{Binding Title}" MinWidth="900" MinHeight="600" WindowStartupLocation="CenterScreen">
 
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Closing">
+            <i:InvokeCommandAction Command="{Binding SaveSession}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
             <view:Home/>
@@ -38,20 +45,20 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="1" Grid.RowSpan="2">
+        <StackPanel Orientation="Vertical" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3">
             <StackPanel.Background>
                 <ImageBrush ImageSource="pack://application:,,,/PUMM;component/Resources/menu_background.png" Stretch="UniformToFill"/>
             </StackPanel.Background>
             <Image Source="pack://application:,,,/PUMM;component/Resources/menu_header.png" VerticalAlignment="Top" Margin="16" RenderOptions.BitmapScalingMode="Fant"/>
             <Button Name="tabHome" Command="{Binding NavCommand}" CommandParameter="home" Click="TabHome_Click" Style="{StaticResource EnabledTab}" Cursor="Hand" Margin="16, 0, 16, 0">
                 <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/home_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/home_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Home</Label>
                 </DockPanel>
             </Button>
             <Button Name="tabNewModpack" Command="{Binding NavCommand}" CommandParameter="new_modpack" Click="TabNewModpack_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
                 <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/add_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/add_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">New Modpack</Label>
                 </DockPanel>
             </Button>
@@ -63,7 +70,7 @@
             </Button>
             <Button Name="tabMods" Command="{Binding NavCommand}" CommandParameter="mods" Click="TabMods_Click" Style="{StaticResource DisabledTab}" Cursor="Hand" Margin="16, 5, 16, 0">
                 <DockPanel Width="{Binding ActualWidth, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/mods_ico.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/mods_icon.png" Width="22" Margin="24, 14, 24, 14" RenderOptions.BitmapScalingMode="Fant"></Image>
                     <Label VerticalAlignment="Center" Foreground="White" Margin="0, 0, 0, 0">Mods</Label>
                 </DockPanel>
             </Button>
@@ -73,23 +80,40 @@
             <ContentControl Content="{Binding CurrentViewModel}" />
         </Grid>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="2" Background="White" MaxHeight="88">
-            <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
-                <Label Name="labelModpackName" HorizontalAlignment="Right" Content="{Binding Active.Name}" MouseLeftButtonUp="LabelModpackName_MouseLeftButtonUp" Cursor="Hand"/>
-                <StackPanel Name="inputModpackName" Orientation="Horizontal" Visibility="Collapsed">
-                    <TextBox HorizontalAlignment="Right" Text="{Binding Active.Name, Mode=TwoWay}" Style="{StaticResource PrimaryInput}"></TextBox>
-                    <Button Name="buttonSaveModpackName" Click="ButtonSaveModpackName_Click" Command="{Binding SetName}" Style="{StaticResource Icon}" Margin="4 0 4 0" Height="14">
-                        <Image Source="pack://application:,,,/PUMM;component/Resources/apply_icon.png" RenderOptions.BitmapScalingMode="Fant"></Image>
-                    </Button>
-                </StackPanel>
-                <Label HorizontalAlignment="Right" Content="{Binding Active.Id}" ContentStringFormat="Mods: {0}"/>
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width=".2*"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel x:Name="btnCloseActive" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28 0 0 0" Grid.Column="0" Grid.Row="0">
+                <Button Command="{Binding ClearActive}" Style="{StaticResource Close}" Width="36" Height="36">
+                    <Image Source="pack://application:,,,/PUMM;component/Resources/close_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="6" />
+                </Button>
+                <TextBlock HorizontalAlignment="Center" Margin="0 4 0 0">Close</TextBlock>
             </StackPanel>
-            <Button Command="{Binding BrowseThumbnail}" Style="{StaticResource ThumbnailButton}" Width="128" Height="88">
-                <Button.Background>
-                    <ImageBrush Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" ImageSource="{Binding Active.Thumbnail}"/>
-                </Button.Background>
-            </Button>
-            
-        </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="0" Background="White" MaxHeight="88">
+                <StackPanel Orientation="Vertical" VerticalAlignment="Bottom">
+                    <Label Name="labelModpackName" HorizontalAlignment="Right" Content="{Binding Active.Name}" MouseLeftButtonUp="LabelModpackName_MouseLeftButtonUp" Cursor="Hand"/>
+                    <StackPanel Name="inputModpackName" Orientation="Horizontal" Visibility="Collapsed">
+                        <TextBox x:Name="newModpackName" HorizontalAlignment="Right" Text="{Binding PotentialName, Mode=TwoWay}" Style="{StaticResource PrimaryInput}" TextChanged="NewModpackName_TextChanged"></TextBox>
+                        <Button Name="buttonSaveModpackName" Click="ButtonSaveModpackName_Click" Command="{Binding SetName}" Style="{StaticResource Icon}" Margin="4 0 4 0" Height="14">
+                            <Image Source="pack://application:,,,/PUMM;component/Resources/apply_icon.png" RenderOptions.BitmapScalingMode="Fant"></Image>
+                        </Button>
+                    </StackPanel>
+                    <Label HorizontalAlignment="Right" Content="{Binding Active.Mods.Count}" ContentStringFormat="Mods: {0}"/>
+                </StackPanel>
+                <Button Command="{Binding BrowseThumbnail}" Style="{StaticResource ThumbnailButton}" Width="128" Height="88">
+                    <Button.Background>
+                        <ImageBrush Stretch="UniformToFill" RenderOptions.BitmapScalingMode="Fant" ImageSource="{Binding Active.Thumbnail}"/>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Window>

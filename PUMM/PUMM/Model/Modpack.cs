@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -11,7 +12,7 @@ namespace PUMM.Model
         private string name;
         private string filepath;
         private int version;
-        private int mods;
+        private List<string> mods;
 
         public int Id
         {
@@ -71,7 +72,7 @@ namespace PUMM.Model
             get { return Util.LoadThumbnail(filepath); }
         }
 
-        public int Mods
+        public List<string> Mods
         {
             get { return mods; }
             set

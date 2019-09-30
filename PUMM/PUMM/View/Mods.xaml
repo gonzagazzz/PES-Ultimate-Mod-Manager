@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:PUMM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -13,16 +14,18 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition />
+            <RowDefinition />
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        
-        <ListView x:Name="listMods" ItemsSource="{Binding Mods}" Grid.Row="0" Grid.Column="0">
+
+        <ListView x:Name="listMods" ItemsSource="{Binding Mods}" Margin="12 12 0 0" Grid.Row="0" Grid.Column="0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Width="32">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <CheckBox IsChecked="{Binding Selected, Mode=TwoWay}"/>
+                                    <CheckBox IsChecked="{Binding Selected, Mode=TwoWay}" Command="{Binding ElementName=listMods, Path=DataContext.SelectionChanged}" CommandParameter="{Binding }"/>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
@@ -38,10 +41,37 @@
             </ListView.View>
         </ListView>
 
-        <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="1">
-            <Button Style="{StaticResource Flat}">Generate DpFileList.bin</Button>
-            <Button Command="{Binding SaveModpack}" Style="{StaticResource Flat}">Save Modpack</Button>
-        </StackPanel>
+        <ListView ItemsSource="{Binding CheckedMods}" Margin="12 12 0 0" Grid.Row="1" Grid.Column="0">
+            <ListView.View>
+                <GridView>
+                    <GridView.Columns>
+                        <GridViewColumn Header="CPK">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding }"></TextBlock>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView.Columns>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <TextBlock TextWrapping="Wrap" Foreground="DimGray" HorizontalAlignment="Center" Margin="16 12" Grid.Row="2" Grid.Column="0">This list may not represent the order in which mods are added to DpFileList.bin (DLCs will be arranged to be added first)</TextBlock>
+
+        <Grid Margin="16" Grid.RowSpan="3" Grid.Row="0" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition />
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Button Command="{Binding SaveModpack}" Style="{StaticResource Flat}" Grid.Column="0" Grid.Row="0">Save Modpack</Button>
+            <Button Command="{Binding GenerateBinary}" Style="{StaticResource PrimaryButton}" Grid.Column="0" Grid.Row="2">Generate DpFileList.bin</Button>
+        </Grid>
 
     </Grid>
 </UserControl>

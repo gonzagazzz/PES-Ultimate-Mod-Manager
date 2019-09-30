@@ -9,60 +9,61 @@ using System.Windows;
 using IronXL;
 using System.Data;
 using PUMM.Model;
+using System.Windows.Forms;
 
 namespace PUMM
 {
     class ExcelProvider
     {
 
-        WorkBook registry;
-
-        public ExcelProvider()
+        public static void export(Modpack modpack)
         {
-            if (!File.Exists(System.AppDomain.CurrentDomain.BaseDirectory + "pumm.xlsx"))
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.Filter = "XLSX File|*.xlsx";
+            dialog.FileName = modpack.Name;
+            if(dialog.ShowDialog() == DialogResult.OK)
             {
-                registry = WorkBook.Create(ExcelFileFormat.XLSX);
+                // Creates Excel file
+                WorkBook registry = WorkBook.Create(ExcelFileFormat.XLSX);
                 registry.Metadata.Author = "PUMM";
-                registry.CreateWorkSheet("mods");
-                registry.SaveAs("pumm.xlsx");
-            } else
-            {
-                registry = WorkBook.Load("pumm.xlsx");
+                WorkSheet data = registry.CreateWorkSheet("modpack");
+
+                data["A1"].Value = modpack.Name;
+                data["B1"].Value = modpack.Version;
+                data["C1"].Value = modpack.ImagePath;
+
+                for(int i=0; i<modpack.Mods.Count; i++)
+                    data["A" + (2 + i)].Value = modpack.Mods[i];
+
+                registry.SaveAs(dialog.FileName);
             }
         }
 
-        public void addModsToModpack(Modpack modpack, ObservableCollection<Mod> mods)
+        public static Modpack import(DbProvider db)
         {
-            foreach(Mod mod in mods)
+            Modpack modpack = null;
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Filter = "XLSX File|*.xlsx";
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
+                WorkBook registry = WorkBook.Load(dialog.FileName);
+                WorkSheet data = registry.WorkSheets.First();
 
-                if(mod.Selected)
+                // Adds modpack to database
+                db.addModpack(data["A1"].Value.ToString(), Int32.Parse(data["B1"].Value.ToString()), data["C1"].Value.ToString());
+                modpack = db.getModpack(data["A1"].Value.ToString());
+
+                // Inserts mods in modpack
+                ObservableCollection<string> mods = new ObservableCollection<string>();
+                foreach (var cell in data["A2:A" + data.Rows.Count])
                 {
-                    if(getMod(modpack.Name) == null)
-                    {
-
-                    }
-                } else
-                {
-                    if(getMod(modpack.Name) != null)
-                    {
-
-                    }
+                    mods.Add(cell.Text);
                 }
+                db.addModsToModpack(modpack, mods, null);
             }
-        }
 
-        public string[] getMod(string name)
-        {
-            WorkSheet mods = registry.WorkSheets.First();
-            int rows = 0;
-            foreach (var cell in mods["B1:B" + mods.Rows.Count])
-            {
-                rows++;   
-                if(cell.Text == name)
-                    return new string[] { (string)mods["B" + rows].Value, (string)mods["C" + rows].Value, (string)mods["D" + rows].Value };
-            }
-            return null;
+            return modpack;
         }
     }
 }
