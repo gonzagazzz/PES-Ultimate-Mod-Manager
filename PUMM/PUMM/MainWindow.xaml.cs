@@ -81,9 +81,9 @@ namespace PUMM
         private void NewModpackName_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (String.IsNullOrEmpty(newModpackName.Text))
-                btnCloseActive.Visibility = Visibility.Collapsed;
+                barActiveModpack.Visibility = Visibility.Collapsed;
             else
-                btnCloseActive.Visibility = Visibility.Visible;
+                barActiveModpack.Visibility = Visibility.Visible;
         }
     }
 }

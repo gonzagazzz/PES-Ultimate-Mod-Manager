@@ -28,11 +28,10 @@ namespace PUMM.ViewModel
 
             SetVersion = new MyICommand<string>(updateVersion);
             BrowseDownload = new MyICommand<string>(updateDownloadPath);
-            Import = new MyICommand<string>(importModpack);
-            Export = new MyICommand<string>(exportModpack);
             GenerateBinary = new MyICommand<string>(generateDpFileList);
             OpenExplorer = new MyICommand<string>(openInExplorer);
             RemovePath = new MyICommand<string>(removePath);
+            OpenBrowser = new MyICommand<string>(openBrowser);
         }
 
         public string DownloadPath
@@ -51,11 +50,10 @@ namespace PUMM.ViewModel
 
         public MyICommand<string> SetVersion { get; private set; }
         public MyICommand<string> BrowseDownload { get; private set; }
-        public MyICommand<string> Import { get; private set; }
-        public MyICommand<string> Export { get; private set; }
         public MyICommand<string> GenerateBinary { get; private set; }
         public MyICommand<string> OpenExplorer { get; private set; }
         public MyICommand<string> RemovePath { get; private set; }
+        public MyICommand<string> OpenBrowser { get; private set; }
 
         private void updateVersion(string version)
         {
@@ -102,30 +100,6 @@ namespace PUMM.ViewModel
             }
         }
 
-        private void importModpack(string s)
-        {
-            Modpack modpack = ExcelProvider.import(db);
-            if(modpack != null)
-            {
-                string[] success = Messages.success("ModpackImported", new string[] { modpack.Name });
-                MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void exportModpack(string s)
-        {
-            if (main.Active == null)
-            {
-                string[] error = Messages.error("NoActiveModpack", null);
-                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            
-            ExcelProvider.export(main.Active);
-            string[] success = Messages.success("ModpackExported", new string[] { main.Active.Name });
-            MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
         private void generateDpFileList(string s)
         {
             if(DownloadPath == "Browse PES download folder...")
@@ -149,7 +123,7 @@ namespace PUMM.ViewModel
                 return;
             }
 
-            DpFileListUtil.generate(main.Active.Mods, main.Active.Version, DownloadPath + @"\DpFileList.bin");
+            DpFileListUtil.generate(main.Active.Mods, DownloadPath + @"\DpFileList.bin");
             string[] success = Messages.success("GeneratedFromModpack", new string[] { main.Active.Name });
             MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
@@ -165,5 +139,9 @@ namespace PUMM.ViewModel
             DownloadPath = "Browse PES download folder...";
         }
 
+        private void openBrowser(string s)
+        {
+            Process.Start("http://www.google.pt");
+        }
     }
 }

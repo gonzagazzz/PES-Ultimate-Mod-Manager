@@ -43,31 +43,21 @@ namespace PUMM
             return dlcs;
         }
         
-        public static void generate(List<string> mods, int version, string binPath)
+        public static void generate(List<string> mods, string binPath)
         {
             BinaryWriter bw = new BinaryWriter(new FileStream(binPath, FileMode.Create));
-            switch (version) {
-                case 2019:
-                    int decrementing = mods.Count;
-                    foreach(string mod in mods)
-                    {
-                        // First 16 bytes
-                        bw.Write('d');
-                        for (int i = 0; i < 3; i++) bw.Write(string.Empty);
-                        bw.Write(Convert.ToByte(decrementing));
-                        decrementing--;
-                        for (int i = 0; i < 3; i++) bw.Write(string.Empty);
-                        bw.Write('d');
-                        for (int i = 0; i < 3; i++) bw.Write(string.Empty);
-                        bw.Write('t');
-                        bw.Write('\'');
-                        for (int i = 0; i < 2; i++) bw.Write(string.Empty);
-                        // CPK name
-                        bw.Write(Encoding.UTF8.GetBytes(mod));
-                        // Remaining bytes
-                        for (int i = 0; i < (32 - mod.Length); i++) bw.Write(string.Empty);
-                    }
-                    break;
+            int decrementing = mods.Count;
+            foreach (string mod in mods)
+            {
+                // First 16 bytes
+                for (int i = 0; i < 4; i++) bw.Write(string.Empty);
+                bw.Write(Convert.ToByte(decrementing));
+                decrementing--;
+                for (int i = 0; i < 11; i++) bw.Write(string.Empty);
+                // CPK name
+                bw.Write(Encoding.UTF8.GetBytes(mod));
+                // Remaining bytes
+                for (int i = 0; i < (32 - mod.Length); i++) bw.Write(string.Empty);
             }
             bw.Close();
         }

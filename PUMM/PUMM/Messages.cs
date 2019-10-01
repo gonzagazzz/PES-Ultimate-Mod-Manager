@@ -19,13 +19,13 @@ namespace PUMM
                 case "EmptyModpack":
                     return new string[] { "Modpack '" + args[0] + "' does not have any mods. Please select mods in Mods page and click 'Save Modpack' to keep changes.", "Modpack is empty" };
                 case "EmptyModsList":
-                    return new string[] { "Mods list is empty. Please select mods in Mods page and click 'Generate DpFileList.bin'.", "Mods list empty" };
+                    return new string[] { "Mods list is empty. Please select mods in Mods page or set a modpack as active in Library page and click 'Generate DpFileList.bin'.", "Mods list empty" };
                 case "EmptyModpackName":
                     return new string[] { "Modpack's name field is empty. Please fill it with desired name.", "Empty name field" };
                 case "EmptyModpackThumbnail":
                     return new string[] { "Modpack's thumbnail field is empty. Please browse desired thumbnail.", "Empty thumbnail field" };
                 case "ModpackAlreadyExists":
-                    return new string[] { "Modpack '" + args[0] + "' already exists. Please choose a different name.", "Modpack already exists" };
+                    return new string[] { "Modpack '" + args[0] + "' already exists.", "Modpack already exists" };
             }
             return null;
         }

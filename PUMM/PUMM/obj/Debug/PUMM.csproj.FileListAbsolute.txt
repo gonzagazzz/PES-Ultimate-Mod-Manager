@@ -51,4 +51,7 @@ D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\Xceed.Wpf.Toolkit.dl
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\View\Mods.g.cs
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\View\Mods.baml
 D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\IronXL.dll
-D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\PUMM.csprojAssemblyReference.cache
+D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\PUMM.exe.manifest
+D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\bin\Debug\PUMM.application
+D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\PUMM.exe.manifest
+D:\Projects\C#\PES-Ultimate-Mod-Manager\PUMM\PUMM\obj\Debug\PUMM.application

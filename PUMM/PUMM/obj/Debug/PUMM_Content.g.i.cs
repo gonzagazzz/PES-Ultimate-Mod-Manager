@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("menu_header.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("logo.ico")]
 
 

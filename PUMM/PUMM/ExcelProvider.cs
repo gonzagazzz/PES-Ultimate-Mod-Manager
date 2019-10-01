@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using IronXL;
 using System.Data;
 using PUMM.Model;
@@ -49,6 +48,14 @@ namespace PUMM
             {
                 WorkBook registry = WorkBook.Load(dialog.FileName);
                 WorkSheet data = registry.WorkSheets.First();
+
+                // This should be decoupled from here
+                if (db.getModpack(data["A1"].Value.ToString()) != null)
+                {
+                    string[] error = Messages.error("ModpackAlreadyExists", new string[] { data["A1"].Value.ToString() });
+                    MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return null;
+                }
 
                 // Adds modpack to database
                 db.addModpack(data["A1"].Value.ToString(), Int32.Parse(data["B1"].Value.ToString()), data["C1"].Value.ToString());

@@ -28,6 +28,8 @@ namespace PUMM.ViewModel
             AdjustItems = new MyICommand<string>(adjustItemsWidth);
             SetAsActive = new MyICommand<Modpack>(setActive);
             DeleteModpack = new MyICommand<Modpack>(deleteModpack);
+            Import = new MyICommand<string>(importModpack);
+            Export = new MyICommand<string>(exportModpack);
         }
 
         private double itemWidth;
@@ -47,6 +49,8 @@ namespace PUMM.ViewModel
         public MyICommand<string> AdjustItems { get; set; }
         public MyICommand<Modpack> SetAsActive { get; set; }
         public MyICommand<Modpack> DeleteModpack { get; set; }
+        public MyICommand<string> Import { get; private set; }
+        public MyICommand<string> Export { get; private set; }
 
         private void adjustItemsWidth(string s)
         {
@@ -73,11 +77,39 @@ namespace PUMM.ViewModel
             if (dialogResult == DialogResult.Yes)
             {
                 if (main.Active != null && main.Active.Id == modpack.Id)
+                {
                     main.Active = null;
-
+                    main.PotentialName = string.Empty;
+                }
+                
                 Modpacks.Remove(modpack);
                 db.deleteModpack(modpack.Id);
             }
+        }
+
+        private void importModpack(string s)
+        {
+            Modpack modpack = ExcelProvider.import(db);
+            if (modpack != null)
+            {
+                Modpacks.Add(modpack);
+                string[] success = Messages.success("ModpackImported", new string[] { modpack.Name });
+                MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void exportModpack(string s)
+        {
+            if (main.Active == null)
+            {
+                string[] error = Messages.error("NoActiveModpack", null);
+                MessageBox.Show(error[0], error[1], MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            ExcelProvider.export(main.Active);
+            string[] success = Messages.success("ModpackExported", new string[] { main.Active.Name });
+            MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
     }

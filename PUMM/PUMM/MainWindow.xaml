@@ -8,7 +8,10 @@
         xmlns:view="clr-namespace:PUMM.View"
         xmlns:viewModel="clr-namespace:PUMM.ViewModel"
         mc:Ignorable="d"
-        Title="{Binding Title}" MinWidth="900" MinHeight="600" WindowStartupLocation="CenterScreen">
+        Title="{Binding Title}"
+        MinWidth="900" MinHeight="600"
+        WindowStartupLocation="CenterScreen"
+        Icon="pack://application:,,,/PUMM;component/Resources/logo.ico">
 
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Closing">
@@ -80,7 +83,7 @@
             <ContentControl Content="{Binding CurrentViewModel}" />
         </Grid>
 
-        <Grid Grid.Column="1" Grid.Row="2">
+        <Grid x:Name="barActiveModpack" Grid.Column="1" Grid.Row="2" Visibility="Collapsed">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width=".2*"/>
                 <ColumnDefinition />
@@ -89,7 +92,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
 
-            <StackPanel x:Name="btnCloseActive" Visibility="Collapsed" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28 0 0 0" Grid.Column="0" Grid.Row="0">
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center" Margin="28 0 0 0" Grid.Column="0" Grid.Row="0">
                 <Button Command="{Binding ClearActive}" Style="{StaticResource Close}" Width="36" Height="36">
                     <Image Source="pack://application:,,,/PUMM;component/Resources/close_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="6" />
                 </Button>

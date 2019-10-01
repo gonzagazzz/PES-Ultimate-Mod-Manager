@@ -86,12 +86,12 @@ namespace PUMM.ViewModel
                     return;
                 }
 
-                DpFileListUtil.generate(DpFileListUtil.arrangeDLC(CheckedMods.ToList()), main.Version, main.DownloadPath + @"\DpFileList.bin");
+                DpFileListUtil.generate(DpFileListUtil.arrangeDLC(CheckedMods.ToList()), main.DownloadPath + @"\DpFileList.bin");
                 string[] success = Messages.success("GeneratedFromModsList", null);
                 MessageBox.Show(success[0], success[1], MessageBoxButton.OK, MessageBoxImage.Information);
             } else // Generate from active Modpack
             {
-                DpFileListUtil.generate(main.Active.Mods, main.Active.Version, main.DownloadPath + @"\DpFileList.bin");
+                DpFileListUtil.generate(main.Active.Mods, main.DownloadPath + @"\DpFileList.bin");
                 string[] success = Messages.success("GeneratedFromModpack", new string[] { main.Active.Name });
                 MessageBox.Show(success[0], success[1], MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -121,6 +121,7 @@ namespace PUMM.ViewModel
             {
                 checkedMods.Add(mod.Filename);
                 remainingMods.Remove(mod.Filename);
+                CheckedMods = new ObservableCollection<string>(DpFileListUtil.arrangeDLC(CheckedMods.ToList()));
             } else {
                 remainingMods.Add(mod.Filename);
                 checkedMods.Remove(mod.Filename);

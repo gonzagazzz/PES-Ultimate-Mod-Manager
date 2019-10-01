@@ -9,31 +9,18 @@
     <Grid Background="#EDF1F2">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
-            <ColumnDefinition />
-            <ColumnDefinition />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
             <RowDefinition />
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Orientation="Vertical" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="0">
-            <Button Command="{Binding Import}" Style="{StaticResource Flat}" Margin="12 12 12 0" HorizontalAlignment="Right" Width="156">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/import_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="0 0 16 0" Height="20"/>
-                    <TextBlock VerticalAlignment="Center">Import Modpack</TextBlock>
-                </StackPanel>
-            </Button>
-            <Button Command="{Binding Export}" Style="{StaticResource Flat}" Margin="12 6 12 0" HorizontalAlignment="Right" Width="156">
-                <StackPanel Orientation="Horizontal">
-                    <Image Source="pack://application:,,,/PUMM;component/Resources/export_icon.png" RenderOptions.BitmapScalingMode="Fant" Margin="0 0 16 0" Height="20"/>
-                    <TextBlock VerticalAlignment="Center">Export Modpack</TextBlock>
-                </StackPanel>
-            </Button>
-        </StackPanel>
+        <Button Command="{Binding OpenBrowser}" Style="{StaticResource ThumbnailButton}" Background="Transparent" Grid.Column="0" Grid.Row="0">
+            <Image Source="pack://application:,,,/PUMM;component/Resources/logo.png" Margin="0 88"/>
+        </Button>
         
-        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="1">
+        <StackPanel Orientation="Vertical" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <RadioButton GroupName="Version" IsChecked="{Binding Path=VersionSelection[0], Mode=TwoWay}" Command="{Binding SetVersion}" CommandParameter="2019" Style="{StaticResource Option}" Margin="24 0 24 0" Width="220">
                     <Image Source="pack://application:,,,/PUMM;component/Resources/pes2019.png" RenderOptions.BitmapScalingMode="Fant" Margin="16 0 0 0"/>
@@ -56,6 +43,6 @@
             </TextBlock>
         </StackPanel>
 
-        <Button Command="{Binding GenerateBinary}" Style="{StaticResource PrimaryButton}" Margin="32 16 32 16" Grid.ColumnSpan="3" Grid.Column="0" Grid.Row="2">Generate DpFileList</Button>
+        <Button Command="{Binding GenerateBinary}" Style="{StaticResource PrimaryButton}" Margin="32 16 32 16" Grid.Column="0" Grid.Row="2">Generate DpFileList.bin</Button>
     </Grid>
 </UserControl>
