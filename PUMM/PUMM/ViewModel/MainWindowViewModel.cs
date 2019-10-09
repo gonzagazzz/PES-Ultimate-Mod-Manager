@@ -15,6 +15,7 @@ namespace PUMM.ViewModel
     {
         private string title;
         private HomeViewModel home;
+        private AboutViewModel about;
         private DbProvider db;
         private Modpack active;
         private int version;
@@ -33,6 +34,7 @@ namespace PUMM.ViewModel
 
             /* Initializes needed ViewModels */
             home = new HomeViewModel(db, this);
+            about = new AboutViewModel();
 
             // Gets current PES version download path and updates Home page hyperlink
             string download = db.getSetting("pes" + version + "_path");
@@ -109,6 +111,9 @@ namespace PUMM.ViewModel
                     break;
                 case "mods":
                     CurrentViewModel = new ModsViewModel(db, this);
+                    break;
+                case "about":
+                    CurrentViewModel = about;
                     break;
                 default:
                     break;

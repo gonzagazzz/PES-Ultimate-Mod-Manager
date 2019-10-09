@@ -107,9 +107,11 @@ namespace PUMM.ViewModel
                 return;
             }
 
-            ExcelProvider.export(main.Active);
-            string[] success = Messages.success("ModpackExported", new string[] { main.Active.Name });
-            MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            if(ExcelProvider.export(main.Active))
+            {
+                string[] success = Messages.success("ModpackExported", new string[] { main.Active.Name });
+                MessageBox.Show(success[0], success[1], MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
     }

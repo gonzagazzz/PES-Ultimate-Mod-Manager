@@ -16,7 +16,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding OpenBrowser}" Style="{StaticResource ThumbnailButton}" Background="Transparent" Grid.Column="0" Grid.Row="0">
+        <Button Command="{Binding OpenBrowser}" Style="{StaticResource ImageButton}" Background="Transparent" Grid.Column="0" Grid.Row="0">
             <Image Source="pack://application:,,,/PUMM;component/Resources/logo.png" Margin="0 88"/>
         </Button>
         

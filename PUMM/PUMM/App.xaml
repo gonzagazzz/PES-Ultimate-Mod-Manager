@@ -4,7 +4,7 @@
              xmlns:local="clr-namespace:PUMM"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        
+
         <Style TargetType="{x:Type Button}" x:Key="DisabledTab">
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="Foreground" Value="White"/>
@@ -112,13 +112,6 @@
             </Style.Triggers>
         </Style>
 
-        <Style TargetType="{x:Type TextBox}" x:Key="PrimaryInput">
-            <Setter Property="Padding" Value="32 0 0 0"/>
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="Foreground" Value="Black"/>
-            <Setter Property="BorderThickness" Value="0"/>
-        </Style>
-
         <Style TargetType="{x:Type Button}" x:Key="ThumbnailButton">
             <Setter Property="Background" Value="White"/>
             <Setter Property="BorderThickness" Value="0"/>
@@ -137,6 +130,29 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+        
+        <Style TargetType="{x:Type Button}" x:Key="ImageButton">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <ContentPresenter/>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value=".7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type TextBox}" x:Key="PrimaryInput">
+            <Setter Property="Padding" Value="32 0 0 0"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="BorderThickness" Value="0"/>
         </Style>
 
         <Style TargetType="{x:Type Button}" x:Key="Icon">
@@ -186,6 +202,5 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Application.Resources>
 </Application>
